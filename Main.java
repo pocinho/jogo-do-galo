@@ -47,27 +47,29 @@ public class Main {
             System.out.println(e.getMessage());
             podeJogar = false;
         }
-        if (podeJogar) {
+        if (podeJogar && j.vitoria().isEmpty()) {
             j.ia();
+        }
+        if (!j.vitoria().isEmpty()) {
+            System.out.println("O jogador com a marca " + j.vitoria() + " ganhou!");
         }
     }
 
     public static int validarInput(Scanner s) {
         int resultado = 0;
-
-        for (;;) {
-            if (!s.hasNextInt()) {
-                System.out.println("Input invalido.");
-                s.nextLine();
-            } else {
-                resultado = Integer.parseInt(s.nextLine());
-                if (resultado >= 1 && resultado <= 3)
-                    break;
-                else {
+        do {
+            for (;;) {
+                if (!s.hasNextInt()) {
                     System.out.println("Input invalido.");
+                    s.nextLine();
+                } else {
+                    resultado = Integer.parseInt(s.nextLine());
+                    if (resultado < 1 || resultado > 3)
+                        System.out.println("Input invalido.");
+                    break;
                 }
             }
-        }
+        } while (resultado < 1 || resultado > 3);
 
         return resultado;
     }
