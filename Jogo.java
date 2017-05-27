@@ -58,7 +58,7 @@ public class Jogo {
             resultado = "O";
         } else if (tabuleiro[0][0] == Marca.X && tabuleiro[1][1] == Marca.X && tabuleiro[2][2] == Marca.X) {
             resultado = "X";
-        } else if (tabuleiro[0][2] == Marca.O && tabuleiro[1][1] == Marca.O && tabuleiro[2][0] == Marca.O) {
+        } else if (tabuleiro[0][2] == Marca.X && tabuleiro[1][1] == Marca.X && tabuleiro[2][0] == Marca.X) {
             resultado = "X";
         }
         return resultado;
@@ -185,6 +185,51 @@ public class Jogo {
 
         if (!jogado && tabuleiro[0][2] == Marca.X) {
             if (tabuleiro[0][0] == Marca.X) {
+                if (tabuleiro[0][1] == null) {
+                    tabuleiro[0][1] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[0][2] == Marca.X) {
+            if (tabuleiro[1][2] == Marca.X) {
+                if (tabuleiro[2][2] == null) {
+                    tabuleiro[2][2] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[1][2] == Marca.X) {
+            if (tabuleiro[2][2] == Marca.X) {
+                if (tabuleiro[1][2] == null) {
+                    tabuleiro[1][2] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[1][2] == Marca.X) {
+            if (tabuleiro[0][2] == Marca.X) {
+                if (tabuleiro[2][2] == null) {
+                    tabuleiro[2][2] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[1][1] == Marca.X) {
+            if (tabuleiro[2][2] == Marca.X) {
+                if (tabuleiro[0][0] == null) {
+                    tabuleiro[0][0] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[1][1] == Marca.X) {
+            if (tabuleiro[2][1] == Marca.X) {
                 if (tabuleiro[0][1] == null) {
                     tabuleiro[0][1] = Marca.O;
                     jogado = true;
