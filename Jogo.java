@@ -237,6 +237,24 @@ public class Jogo {
             }
         }
 
+        if (!jogado && tabuleiro[1][1] == Marca.X) {
+            if (tabuleiro[0][2] == Marca.X) {
+                if (tabuleiro[2][0] == null) {
+                    tabuleiro[2][0] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
+        if (!jogado && tabuleiro[1][2] == Marca.X) {
+            if (tabuleiro[2][2] == Marca.X) {
+                if (tabuleiro[0][2] == null) {
+                    tabuleiro[0][2] = Marca.O;
+                    jogado = true;
+                }
+            }
+        }
+
         if (!jogado){
             int linha = 0;
             int coluna = 0;
