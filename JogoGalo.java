@@ -9,16 +9,10 @@ public class JogoGalo implements Jogo {
     private TabuleiroGalo tabuleiro;
     private Jogador jogador1;
     private Jogador jogador2;
-    private boolean ai;
-    private boolean melhorDeTres;
-    private boolean vitoria;
     private Scanner s = new Scanner(System.in);
 
     public JogoGalo() {
         tabuleiro = new TabuleiroGalo();
-        ai = false;
-        melhorDeTres = false;
-        vitoria = false;
     }
 
     public void iniciar() {
