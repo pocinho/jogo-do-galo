@@ -69,16 +69,16 @@ public class JogoGalo implements Jogo {
         }
         switch (tipoJogo) {
             case 1:
-                jogarPvp(3);
+                jogar(3, false);
                 break;
             case 2:
-                jogarIa(3);
+                jogar(3, true);
                 break;
             case 3:
-                jogarPvp(1);
+                jogar(1, false);
                 break;
             case 4:
-                jogarIa(1);
+                jogar(1, true);
                 break;
             default:
                 System.out.println("Algo correu mal ao iniciar o jogo.");
@@ -86,7 +86,7 @@ public class JogoGalo implements Jogo {
         }
     }
 
-    private void jogarPvp(int jogadas) {
+    private void jogar(int jogadas, boolean jogarIa) {
         int totalJogos = 1;
         int numeroDeJogos = jogadas;
         int jogadasDisponiveis = 9;
@@ -110,77 +110,7 @@ public class JogoGalo implements Jogo {
                     jogador1.setVez(true);
                     jogador2.setVez(false);
                 }
-                System.out.println("Jogador: " + nome);
-                System.out.println("Introduza posição linha: ");
-                linha = validarInput(s);
-                System.out.println("Introduza posição coluna: ");
-                coluna = validarInput(s);
-                try {
-                    validarJogada(linha, coluna, marca);
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                    if (jogador1.isVez()) {
-                        jogador1.setVez(false);
-                        jogador2.setVez(true);
-                    } else {
-                        jogador1.setVez(true);
-                        jogador2.setVez(false);
-                    }
-                }
-            }
-            System.out.println(imprimirTabuleiro());
-            String nome = "";
-            if (jogador1.getMarca().toString().equals(vitoria())) {
-                nome = jogador1.getNome();
-                jogador1.setPontos(jogador1.getPontos() + 1);
-                System.out.println("O jogador " + nome + " com a marca " + vitoria() + " ganhou a ronda " + totalJogos + " de " + jogadas + " com " + jogador1.getPontos() + " pontos!\n");
-            } else if (jogador2.getMarca().toString().equals(vitoria())) {
-                nome = jogador2.getNome();
-                jogador2.setPontos(jogador2.getPontos() + 1);
-                System.out.println("O jogador " + nome + " com a marca " + vitoria() + " ganhou a ronda " + totalJogos + " de " + jogadas + " com " + jogador2.getPontos() + " pontos!\n");
-            } else if (jogadasDisponiveis == 0) {
-                System.out.println("Empate.");
-                jogadasDisponiveis = 9;
-            }
-            tabuleiro.limparTabuleiro();
-            totalJogos++;
-            numeroDeJogos--;
-        }
-        if (jogador1.getPontos() > jogador2.getPontos()) {
-            System.out.println("O Jogador " + jogador1.getNome() + " ganhou!");
-        } else if (jogador1.getPontos() < jogador2.getPontos()) {
-            System.out.println("O Jogador " + jogador2.getNome() + " ganhou!");
-        } else {
-            System.out.println("Empate.");
-        }
-    }
-
-    private void jogarIa(int jogadas) {
-        int totalJogos = 1;
-        int numeroDeJogos = jogadas;
-        int jogadasDisponiveis = 9;
-
-        while (numeroDeJogos > 0) {
-            while (vitoria().isEmpty() && jogadasDisponiveis > 0) {
-                System.out.println("Ronda " + numeroDeJogos);
-                System.out.println(imprimirTabuleiro());
-                int linha = 0;
-                int coluna = 0;
-                String nome = "";
-                Marca marca = Marca.VAZIO;
-                if (jogador1.isVez()) {
-                    nome = jogador1.getNome();
-                    marca = jogador1.getMarca();
-                    jogador1.setVez(false);
-                    jogador2.setVez(true);
-                } else {
-                    nome = jogador2.getNome();
-                    marca = jogador2.getMarca();
-                    jogador1.setVez(true);
-                    jogador2.setVez(false);
-                }
-
-                if (!jogador1.isVez()) {
+                if (!jogarIa) {
                     System.out.println("Jogador: " + nome);
                     System.out.println("Introduza posição linha: ");
                     linha = validarInput(s);
@@ -199,9 +129,29 @@ public class JogoGalo implements Jogo {
                         }
                     }
                 } else {
-                    jogador1.setVez(true);
-                    jogador2.setVez(false);
-                    ia(jogador2.getMarca());
+                    if (!jogador1.isVez()) {
+                        System.out.println("Jogador: " + nome);
+                        System.out.println("Introduza posição linha: ");
+                        linha = validarInput(s);
+                        System.out.println("Introduza posição coluna: ");
+                        coluna = validarInput(s);
+                        try {
+                            validarJogada(linha, coluna, marca);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                            if (jogador1.isVez()) {
+                                jogador1.setVez(false);
+                                jogador2.setVez(true);
+                            } else {
+                                jogador1.setVez(true);
+                                jogador2.setVez(false);
+                            }
+                        }
+                    } else {
+                        jogador1.setVez(true);
+                        jogador2.setVez(false);
+                        ia(jogador2.getMarca());
+                    }
                 }
                 jogadasDisponiveis--;
             }
@@ -215,7 +165,7 @@ public class JogoGalo implements Jogo {
                 nome = jogador2.getNome();
                 jogador2.setPontos(jogador2.getPontos() + 1);
                 System.out.println("O jogador " + nome + " com a marca " + vitoria() + " ganhou a ronda " + totalJogos + " de " + jogadas + " com " + jogador2.getPontos() + " pontos!\n");
-            } else if (jogadasDisponiveis == 0){
+            } else if (jogadasDisponiveis == 0) {
                 System.out.println("Empate.");
                 jogadasDisponiveis = 9;
             }
